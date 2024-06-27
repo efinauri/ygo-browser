@@ -10,6 +10,7 @@ import (
 
 func GetCardHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
 		idParam := r.URL.Query().Get("id")
 		id, err := strconv.Atoi(idParam)
 		if err != nil {
