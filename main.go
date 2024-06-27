@@ -13,10 +13,11 @@ func main() {
 		log.Fatal("Error connecting to the database:", err)
 	}
 	defer db.Close()
+	log.Println("Server is running on port 8088")
+	log.Println("http://localhost:8088")
 
 	http.HandleFunc("/", handlers.IndexHandler)
-	http.HandleFunc("/card", handlers.GetCardHandler(db))
+	http.HandleFunc("/card", handlers.CardHandler(db))
 
-	log.Println("Server is running on port 8088")
 	log.Fatal(http.ListenAndServe(":8088", nil))
 }
