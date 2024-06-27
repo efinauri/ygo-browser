@@ -6,26 +6,40 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.22'
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.22'
 
-      - name: Install Go dependencies
-        run: go mod download
+    - name: Build Go web server
+      run: go build -o server ./main.go
 
-      - name: Build the Go application
-        run: go build -o yugioh-browser
+    - name: Run web server
+      run: ./server &
+      env:
+        PORT: 8088
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./deploy
+    - name: Wait for server to start
+      run: |
+        sleep 1
+        curl -s http://localhost:8088 > index.html
+
+    - name: Create deployment directory
+      run: mkdir deployment
+
+    - name: Move HTML files to deployment directory
+      run: mv templates/index.html deployment/
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./deployment
+        publish_branch: gh-pages
