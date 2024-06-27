@@ -32,6 +32,9 @@ jobs:
     - name: Build Go web server
       run: go build -o server ./main.go
 
+    - name: Copy database file
+      run: cp ./cards.cdb ./deployment/cards.cdb
+
     - name: Run web server
       run: ./server &
       env:
