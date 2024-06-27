@@ -32,6 +32,9 @@ jobs:
     - name: Build Go web server
       run: go build -o server ./main.go
 
+    - name: Create deployment directory
+      run: mkdir deployment
+      
     - name: Copy database file
       run: cp ./cards.cdb ./deployment/cards.cdb
 
@@ -44,9 +47,6 @@ jobs:
       run: |
         sleep 1
         curl -s http://localhost:8088 > index.html
-
-    - name: Create deployment directory
-      run: mkdir deployment
 
     - name: Move HTML files to deployment directory
       run: mv templates/index.html deployment/
