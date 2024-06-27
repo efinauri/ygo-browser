@@ -26,8 +26,8 @@ func GetCardHandler(db *sql.DB) http.HandlerFunc {
 		tmpl, err := template.New("card").Parse(`
             <div class="card">
                 <div class="card-name">{{.Name}}</div>
+                <div class="card-types">{{range .Types}}{{.}} {{end}}</div>
                 <div class="card-desc">{{.Desc}}</div>
-                <div class="card-types">Types: {{range .Types}}{{.}} {{end}}</div>
             </div>
         `)
 		if err != nil {
@@ -36,6 +36,6 @@ func GetCardHandler(db *sql.DB) http.HandlerFunc {
 		}
 
 		w.Header().Set("Content-Type", "text/html")
-		tmpl.Execute(w, card)
+		_ = tmpl.Execute(w, card)
 	}
 }
