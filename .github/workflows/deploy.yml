@@ -37,9 +37,9 @@ jobs:
       
     - name: Copy necessary files to deployment directory
       run: |
-        cp ./cards.cdb ./deployment/cards.cdb
-        cp -r ./static ./deployment/static
-        cp -r ./templates ./deployment/templates
+        cp ./cards.cdb deployment/cards.cdb
+        cp -r ./static deployment/static
+        cp -r ./templates deployment/templates
 
 
     - name: Run web server
@@ -51,9 +51,6 @@ jobs:
       run: |
         sleep 1
         curl -s http://localhost:8088 > index.html
-
-    - name: Move HTML files to deployment directory
-      run: mv index.html deployment/
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
