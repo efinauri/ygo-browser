@@ -48,7 +48,7 @@ jobs:
     - name: Wait for server to start
       run: |
         sleep 1
-        curl -s http://localhost:8088 > index.html
+        curl -s http://localhost:8088 > deployment/index.html
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
