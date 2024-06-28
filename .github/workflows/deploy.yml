@@ -49,7 +49,7 @@ jobs:
         curl -s http://localhost:8088 > index.html
 
     - name: Move HTML files to deployment directory
-      run: mv templates/index.html deployment/
+      run: mv index.html deployment/
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3

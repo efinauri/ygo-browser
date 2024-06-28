@@ -5,25 +5,27 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
-	"yugioh-browser/models"
+	"yugioh-browser/models/dtos"
+	"yugioh-browser/models/endpoint_params"
+	"yugioh-browser/services"
 )
 
 func CardHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
-			page, pageSize := getPaginationParams(r)
-			filters := getCardFilters(r)
+			page, pageSize := GetPaginationParams(r)
+			filters := CollectCardFilters(r)
 			HandleGetCardsByFilters(db, w, page, pageSize, filters)
 		}
 	}
 }
 
-func HandleGetCardsByFilters(db *sql.DB, w http.ResponseWriter, page int, pageSize int, filters models.CardFilters) {
-	cards := models.GetCardsByFilters(db, page, pageSize, filters)
+func HandleGetCardsByFilters(db *sql.DB, w http.ResponseWriter, page int, pageSize int, filters endpoint_params.CardSearchFilters) {
+	cards := services.GetAllCards(db, filters, page, pageSize)
 	UpdateDomWithResult(w, cards)
 }
 
-func UpdateDomWithResult(w http.ResponseWriter, cards models.PagedCards) {
+func UpdateDomWithResult(w http.ResponseWriter, cards dtos.PaginatedCardResult) {
 	funcMap := template.FuncMap{
 		"add": func(n int) int { return n + 1 },
 		"sub": func(n int) int { return n - 1 },
@@ -33,9 +35,9 @@ func UpdateDomWithResult(w http.ResponseWriter, cards models.PagedCards) {
         <div class="card">
             <div class="card-name">{{.Name}}</div>
             {{ if gt .Level 0 }}
-            <div class="card-level">Lv. {{.Level}}</div>
+            <div class="card-level">Lv. {{.Level}} {{.Attribute}} {{.Race}}</div>
             {{ end }}
-            <div class="card-types">{{range .Types}}{{.}} {{end}}</div>
+            <div class="card-types">{{.Types}}</div>
             <div class="card-desc">{{.Desc}}</div>
             {{ if and (gt .Atk 0) (gt .Def 0) }}
             <div class="card-stats">{{.Atk}}/{{.Def}}</div>
@@ -61,7 +63,7 @@ func UpdateDomWithResult(w http.ResponseWriter, cards models.PagedCards) {
 	_ = tmpl.Execute(w, cards)
 }
 
-func getPaginationParams(r *http.Request) (int, int) {
+func GetPaginationParams(r *http.Request) (int, int) {
 	page, err := strconv.Atoi(r.URL.Query().Get("page"))
 	if err != nil || page < 1 {
 		page = 1
@@ -73,8 +75,8 @@ func getPaginationParams(r *http.Request) (int, int) {
 	return page, pageSize
 }
 
-func getCardFilters(r *http.Request) models.CardFilters {
-	filters := models.CardFilters{}
+func CollectCardFilters(r *http.Request) endpoint_params.CardSearchFilters {
+	filters := endpoint_params.CardSearchFilters{}
 	if name := r.URL.Query().Get("name"); name != "" {
 		filters.Name = name
 	}
@@ -96,6 +98,5 @@ func getCardFilters(r *http.Request) models.CardFilters {
 	if lvLt := r.URL.Query().Get("lv_lt"); lvLt != "" {
 		filters.LvLte, _ = strconv.Atoi(lvLt)
 	}
-
 	return filters
 }

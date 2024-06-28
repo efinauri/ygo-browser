@@ -1,11 +1,14 @@
 package main
 
 import (
+	"github.com/go-chi/chi/v5"
 	"log"
 	"net/http"
 	"yugioh-browser/database"
 	"yugioh-browser/handlers"
 )
+
+const PORT = ":8088"
 
 func main() {
 	db, err := database.Connect()
@@ -13,11 +16,11 @@ func main() {
 		log.Fatal("Error connecting to the database:", err)
 	}
 	defer db.Close()
-	log.Println("Server is running on port 8088")
-	log.Println("http://localhost:8088")
+	log.Println("Server is running: http://localhost" + PORT)
 
-	http.HandleFunc("/", handlers.IndexHandler)
-	http.HandleFunc("/card", handlers.CardHandler(db))
+	router := chi.NewMux()
+	router.Get("/", handlers.IndexHandler)
+	router.Get("/card", handlers.CardHandler(db))
 
-	log.Fatal(http.ListenAndServe(":8088", nil))
+	log.Fatal(http.ListenAndServe(PORT, router))
 }
