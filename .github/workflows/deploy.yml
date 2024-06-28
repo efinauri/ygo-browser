@@ -33,12 +33,12 @@ jobs:
       run: go build -o server ./main.go
 
     - name: Create deployment directory
-      run: mkdir deployment
-      
+      run: mkdir -p deployment/static
+
     - name: Copy necessary files to deployment directory
       run: |
-        cp ./cards.cdb deployment/cards.cdb
-        cp -r ./static deployment/static
+        cp ./cards.cdb ./deployment/cards.cdb
+        cp -r ./static/css ./deployment/static/css
 
     - name: Run web server
       run: ./server &

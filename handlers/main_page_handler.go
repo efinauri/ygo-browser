@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"net/http"
-	views "yugioh-browser/views/mainpage"
+	views "yugioh-browser/views"
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
