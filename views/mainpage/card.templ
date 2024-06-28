@@ -1,0 +1,70 @@
+package views
+
+import (
+    "yugioh-browser/models/dtos"
+    "yugioh-browser/models/entities"
+    "strings"
+)
+
+func getCardClass(types string) string {
+    if strings.Contains(types, "Spell") {
+        return "card card-spell"
+    }
+    if strings.Contains(types, "Trap") {
+        return "card card-trap"
+    }
+    if strings.Contains(types, "Monster") {
+        if strings.Contains(types, "Normal") {
+            return "card card-normal-monster"
+        }
+        if strings.Contains(types, "Fusion") {
+            return "card card-fusion"
+        }
+        if strings.Contains(types, "XYZ") {
+            return "card card-xyz"
+        }
+        if strings.Contains(types, "Ritual") {
+            return "card card-ritual"
+        }
+        if strings.Contains(types, "Link") {
+            return "card card-link"
+        }
+        if strings.Contains(types, "Synchro") {
+            return "card card-synchro"
+        }
+        if strings.Contains(types, "Effect") {
+            return "card card card-effect-monster"
+        }
+    }
+    return "card"
+}
+
+templ CardsResult(result dtos.PaginatedCardResult) {
+    <div class="flex-container">
+        for _, el := range result.Elements {
+            <div>@card(el)</div>
+        }
+    </div>
+}
+
+templ card(c *entities.Card) {
+    <div class={getCardClass(c.Types)}>
+        <div class="card-content">
+            <div class="card-header">
+                <div class="card-name">{c.Name}</div>
+                if c.Level > 0 {
+                    <div class="card-level">Lv. {c.LevelStr()} {c.Attribute} {c.Race}</div>
+                }
+                <div class="card-types">{c.Types}</div>
+            </div>
+            <div class="card-main">
+                <div class="card-desc">{c.Desc}</div>
+            </div>
+            if strings.Contains(c.Types, "Monster") {
+                <div class="card-footer">
+                    <div class="card-stats">{c.AtkStr()}/{c.DefStr()}</div>
+                </div>
+            }
+        </div>
+    </div>
+}

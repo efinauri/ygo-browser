@@ -1,0 +1,46 @@
+package views
+
+templ Index() {
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Card Search</title>
+        <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+        <link rel="stylesheet" href="/static/css/styles.css"/>
+        @search_panel()
+    </head>
+</html>
+}
+
+templ search_panel() {
+<form hx-get="/api/cards" hx-target="#result" hx-swap="innerHTML">
+        <div>
+            <label for="name">Card Name:</label>
+            <input type="text" id="name" name="name"/>
+        </div>
+         <div>
+            <label for="atk_gt">ATK: between</label>
+            <input type="number" id="atk_gt" name="atk_gt"/>
+            <label for="atk_lt">and</label>
+            <input type="number" id="atk_lt" name="atk_lt"/>
+        </div>
+        <div>
+            <label for="def_gt">DEF: between</label>
+            <input type="number" id="def_gt" name="def_gt"/>
+            <label for="def_lt">and</label>
+            <input type="number" id="def_lt" name="def_lt"/>
+        </div>
+        <div>
+            <label for="lv_gt">Level: Between</label>
+            <input type="number" id="lv_gt" name="lv_gt"/>
+            <label for="lv_lt">and</label>
+            <input type="number" id="lv_lt" name="lv_lt"/>
+        </div>
+        <div>
+            <button type="submit">Search</button>
+        </div>
+</form>
+<div id="result"></div>
+}
