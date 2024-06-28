@@ -12,6 +12,7 @@ import (
 
 func CardHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
 		if r.Method == "GET" {
 			page, pageSize := GetPaginationParams(r)
 			filters := CollectCardFilters(r)
@@ -59,7 +60,6 @@ func UpdateDomWithResult(w http.ResponseWriter, cards dtos.PaginatedCardResult) 
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/html")
 	_ = tmpl.Execute(w, cards)
 }
 

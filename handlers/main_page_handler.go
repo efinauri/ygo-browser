@@ -1,16 +1,11 @@
 package handlers
 
 import (
-	"html/template"
 	"net/http"
+	views "yugioh-browser/views/mainpage"
 )
 
-func IndexHandler(w http.ResponseWriter, _ *http.Request) {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	tmpl, err := template.ParseFiles("index.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	_ = tmpl.Execute(w, nil)
+	views.Index().Render(r.Context(), w)
 }
