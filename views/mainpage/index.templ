@@ -8,14 +8,14 @@ templ Index() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Card Search</title>
         <script src="https://unpkg.com/htmx.org@1.6.1"></script>
-        <link rel="stylesheet" href="/static/css/tailwind.css" />
+        <link rel="stylesheet" href="/static/css/styles.css"/>
         @search_panel()
     </head>
 </html>
 }
 
 templ search_panel() {
-<form hx-get="/cards" hx-targer="#result" hx-swap="innerHTML">
+<form hx-get="/api/cards" hx-target="#result" hx-swap="innerHTML">
         <div>
             <label for="name">Card Name:</label>
             <input type="text" id="name" name="name"/>
@@ -42,4 +42,5 @@ templ search_panel() {
             <button type="submit">Search</button>
         </div>
 </form>
+<div id="result"></div>
 }

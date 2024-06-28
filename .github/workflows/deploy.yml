@@ -35,8 +35,12 @@ jobs:
     - name: Create deployment directory
       run: mkdir deployment
       
-    - name: Copy database file
-      run: cp ./cards.cdb ./deployment/cards.cdb
+    - name: Copy necessary files to deployment directory
+      run: |
+        cp ./cards.cdb ./deployment/cards.cdb
+        cp -r ./static ./deployment/static
+        cp -r ./templates ./deployment/templates
+
 
     - name: Run web server
       run: ./server &

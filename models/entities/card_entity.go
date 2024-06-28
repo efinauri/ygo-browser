@@ -1,6 +1,7 @@
 package entities
 
 import (
+	"fmt"
 	"strings"
 	"yugioh-browser/models/entities/enums"
 )
@@ -22,4 +23,20 @@ func (c *Card) Sanitize(typeMask int, raceMask int, attributeMask int) {
 	c.Types = strings.Join(types, "/")
 	c.Race = enums.DecodeCardRace(raceMask)
 	c.Attribute = enums.DecodeCardAttribute(attributeMask)
+}
+
+func (c *Card) LevelStr() string { return fmt.Sprintf("%d", c.Level) }
+func (c *Card) AtkStr() string {
+	if c.Atk < 0 {
+		return "?"
+	} else {
+		return fmt.Sprintf("%d", c.Atk)
+	}
+}
+func (c *Card) DefStr() string {
+	if c.Def < 0 {
+		return "?"
+	} else {
+		return fmt.Sprintf("%d", c.Def)
+	}
 }
