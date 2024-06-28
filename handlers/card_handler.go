@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"yugioh-browser/models/endpoint_params"
 	"yugioh-browser/services"
-	views "yugioh-browser/views"
+	"yugioh-browser/views"
 )
 
 func CardHandler(db *sql.DB) http.HandlerFunc {
