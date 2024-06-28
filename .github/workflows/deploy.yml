@@ -30,7 +30,7 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Build Go web server
-      run: go build -o server
+      run: go build -o server ./main.go
 
     - name: Create deployment directory
       run: mkdir -p deployment/static
