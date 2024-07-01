@@ -1,0 +1,138 @@
+/* Dark Theme */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    height: 400px; /* Ensure cards have the same height */
+}
+
+/* Background colors for different card types */
+.card-spell {
+    background-color: #1d9e74; /* Darker green for Spell Cards */
+}
+
+.card-trap {
+    background-color: #bc5a84; /* Darker purple for Trap Cards */
+}
+
+.card-normal-monster {
+    background-color: #fde68a; /* Darker yellow/gold for Normal Monster Cards */
+    color: #000000;
+}
+.card-normal-monster .card-desc,
+.card-normal-monster .card-stats,
+.card-normal-monster .card-types,
+.card-normal-monster .card-content,
+.card-normal-monster .card-level {
+    color: #734646;
+}
+
+.card-effect-monster {
+    background-color: #a85713; /* Darker orange for Effect Monster Cards */
+}
+
+.card-fusion {
+    background-color: #a086b7; /* Darker purple for Fusion Monster Cards */
+    color: #000000;
+}
+.card-fusion .card-desc,
+.card-fusion .card-stats,
+.card-fusion .card-types,
+.card-fusion .card-content,
+.card-fusion .card-level {
+    color: #5e465e;
+}
+
+.card-xyz {
+    background-color: #000000; /* Dark gray for XYZ Monster Cards */
+}
+
+.card-ritual {
+    background-color: #9db5cc; /* Blue for Ritual Cards */
+    color: #000000;
+}
+.card-ritual .card-desc,
+.card-ritual .card-stats,
+.card-ritual .card-types,
+.card-ritual .card-content,
+.card-ritual .card-level {
+    color: #465666;
+}
+
+.card-link {
+    background-color: #00008b; /* Dark Blue for Link Cards */
+}
+
+.card-synchro {
+    background-color: #cccccc; /* Light gray for Synchro Cards */
+    color: #000000;
+}
+.card-synchro .card-desc,
+.card-synchro .card-stats,
+.card-synchro .card-types,
+.card-synchro .card-content,
+.card-synchro .card-level {
+    color: #666666;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-header {
+    flex-shrink: 0;
+}
+
+.card-main {
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-y: auto;
+}
+
+.card-footer {
+    flex-shrink: 0;
+    border-top: 1px solid #333;
+    padding-top: 8px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.card-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.card-level, .card-types, .card-stats {
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+}
+
+.card-stats {
+    text-align: right; /* Right-align ATK/DEF */
+}
+
+.card-desc {
+    font-size: 0.875rem;
+    flex-grow: 1;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
