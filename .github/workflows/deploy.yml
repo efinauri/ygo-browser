@@ -37,11 +37,12 @@ jobs:
 
     - name: Copy necessary files to deployment directory
       run: |
+        mv server deployment/
         cp ./cards.cdb ./deployment/cards.cdb
         cp -r ./static/css ./deployment/static/css
 
     - name: Run web server
-      run: ./server &
+      run: ./deployment/server &
       env:
         PORT: 8088
 
